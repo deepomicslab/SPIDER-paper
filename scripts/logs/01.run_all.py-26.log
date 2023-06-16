@@ -1,0 +1,47 @@
+2023-06-16 10:48:13.047437: I tensorflow/core/util/port.cc:110] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2023-06-16 10:48:13.049470: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+2023-06-16 10:48:13.090103: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+2023-06-16 10:48:13.090551: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-06-16 10:48:13.716051: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+breast_cancer H1
+AnnData object with n_obs × n_vars = 613 × 15029
+    obs: 'x', 'y', 'label'
+    uns: 'cluster_key', 'coord_type', 'is_human'
+    obsm: 'spatial'
+/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/breast_cancer/H1//spatalk_lrpair.csv already exists, skipping spatalk.
+using spatalk result
+Running imputation with MAGIC
+Calculating MAGIC...
+  Running MAGIC on 613 cells and 15029 genes.
+  Calculating graph and diffusion operator...
+    Calculating PCA...
+    Calculated PCA in 1.10 seconds.
+    Calculating KNN search...
+    Calculated KNN search in 0.09 seconds.
+    Calculating affinities...
+    Calculated affinities in 0.04 seconds.
+  Calculated graph and diffusion operator in 1.26 seconds.
+  Running MAGIC with `solver='exact'` on 15029-dimensional data may take a long time. Consider denoising specific genes with `genes=<list-like>` or using `solver='approximate'`.
+  Calculating imputation...
+  Calculated imputation in 0.10 seconds.
+Calculated MAGIC in 1.39 seconds.
+scoring
+using sqrt+max
+Construct idata with 1159 interfaces and 495 LR pairs.
+using 15*15 SOM nodes for 1159 points
+Added key nnSVG in idata.uns
+Added key SOMDE in idata.uns
+Added key SpatialDE in idata.uns
+Added key SPARKX in idata.uns
+Added key scGCO in idata.uns
+Added key moranI in idata.uns
+Added key gearyC in idata.uns
+finished running all SVI tests
+Using the results from SVI identification methods: ['SOMDE' 'SpatialDE' 'SPARKX' 'nnSVG' 'scGCO' 'gearyC' 'moranI']
+206/495 SVIs identified (threshold=0.01).
+Added key pattern_score in idata.obsm
+Traceback (most recent call last):
+  File "/var/spool/slurmd/job57599/slurm_script", line 69, in <module>
+    os.remove(f'{out_f}/adata_count.csv')
+FileNotFoundError: [Errno 2] No such file or directory: '/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/breast_cancer/H1//adata_count.csv'
