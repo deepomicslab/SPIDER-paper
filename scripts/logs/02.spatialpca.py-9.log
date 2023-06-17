@@ -1,0 +1,1531 @@
+2023-06-17 13:29:29.895052: I tensorflow/core/util/port.cc:110] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2023-06-17 13:29:29.953999: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+2023-06-17 13:29:30.046609: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+2023-06-17 13:29:30.047005: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-06-17 13:29:30.894106: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+-------------------------------------------------------------------------------
+The following dependent module(s) are not currently loaded: ncurses/6.0 (required by: htop/2.0.1)
+-------------------------------------------------------------------------------
+
+The following have been reloaded with a version change:
+  1) ncurses/6.0 => ncurses/6.2
+
+ARGUMENT '/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/DFPLC/151672//idata_full_meta.csv' __ignored__
+
+ARGUMENT '/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/DFPLC/151672//idata_full_count.csv' __ignored__
+
+ARGUMENT '5' __ignored__
+
+ARGUMENT '50' __ignored__
+
+ARGUMENT '/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/DFPLC/151672/' __ignored__
+
+ARGUMENT '44' __ignored__
+
+ARGUMENT '7' __ignored__
+
+
+R version 4.2.0 (2022-04-22) -- "Vigorous Calisthenics"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(SpatialPCA)
+Registered S3 method overwritten by 'spatstat.core':
+  method          from
+  formula.glmmPQL MASS
+> 
+> args = commandArgs()
+> 
+> if (length(args)==0) {
++   stop("not enough input", call.=FALSE)
++ }
+> 
+> colData <- read.csv(args[4], stringsAsFactors=FALSE, row.names=1, check.names=F)
+> xy_coords = as.matrix(colData)
+> counts <- t(read.csv(args[5], row.names=1, check.names=F, stringsAsFactors=FALSE))
+> rownames(xy_coords) = colnames(counts)
+> rownames(counts) = gsub("_", "-", rownames(counts))
+> customGenelist = rownames(counts)
+> 
+> LIBD = CreateSpatialPCAObject(counts=counts, location=xy_coords, project = "SpatialPCA",gene.type="custom",
++                               customGenelist=customGenelist,min.loctions = 20, min.features=20)
+## Use SCTransform function in Seurat to normalize data. 
+Calculating cell attributes from input UMI matrix: log_umi
+Variance stabilizing transformation of count matrix of size 305 by 7582
+Model formula is y ~ log_umi
+Get Negative Binomial regression parameters per gene
+Using 305 genes, 5000 cells
+  |                                                                              |                                                                      |   0%
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+
+warning: solve(): system is singular; attempting approx solution
+  |                                                                              |======================================================================| 100%
+Found 52 outliers - those will be ignored in fitting/regularization step
+
+Second step: Get residuals using fitted parameters for 305 genes
+  |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
+Computing corrected count matrix for 305 genes
+  |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
+Calculating gene attributes
+Wall clock passed: Time difference of 4.428106 secs
+Determine variable features
+Place corrected count matrix in counts slot
+Centering data matrix
+  |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%
+Set default assay to SCT
+## Custom gene list contains  305  genes. 
+## In total  305  custom genes are matched with genes in the count matrix. 
+## Use  305  custom genes for analysis. 
+> 
+> LIBD = SpatialPCA_buildKernel(LIBD, kerneltype="gaussian", bandwidthtype="SJ",bandwidth.set.by.user=NULL)
+## Selected kernel type is:  gaussian  
+## The bandwidth is:  0.124029213249446  
+## Calculating kernel matrix
+## Finished calculating kernel matrix.
+> LIBD = SpatialPCA_EstimateLoading(LIBD,fast=FALSE,SpatialPCnum=strtoi(args[10])) 
+[1] "Eigen decomposition on kernel matrix!"
+[1] "Using all eigenvectors and eigenvalues in the Kernel matrix!"
+> LIBD = SpatialPCA_SpatialPCs(LIBD, fast=FALSE)
+> 
+> clusterlabel= walktrap_clustering(clusternum=strtoi(args[6]),latent_dat=LIBD@SpatialPCs,knearest=strtoi(args[7]))
+> clusterlabel_refine = refine_cluster_10x(clusterlabels=clusterlabel,location=LIBD@location,shape="square")
+> fname=args[8]
+> write.csv(cbind(LIBD@location, clusterlabel), paste(fname, "interface_label.csv", sep=""))
+> write.csv(cbind(LIBD@location, clusterlabel_refine), paste(fname, "refined_interface_label.csv", sep=""))
+> write.csv(LIBD@SpatialPCs, paste(fname, "interface_SpatialPCs.csv", sep=""), row.names=TRUE)
+> library(slingshot)
+Loading required package: princurve
+Loading required package: TrajectoryUtils
+Loading required package: SingleCellExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+> sim<- SingleCellExperiment(assays = counts)
+> reducedDims(sim) <- SimpleList(DRM = t(LIBD@SpatialPCs))
+> colData(sim)$clusterlabel <- factor(clusterlabel)    
+> sim <-slingshot(sim, clusterLabels = 'clusterlabel', reducedDim = 'DRM',start.clus=clusterlabel[strtoi(args[9])]) 
+> pseudotime_traj1 = slingAvgPseudotime(sim)
+> gridnum = 10
+> cbp = c( "#FD7446" ,"#709AE1", "#31A354","#9EDAE5",
++         "#DE9ED6" ,"#BCBD22", "#CE6DBD" ,"#DADAEB" ,
++         "yellow", "#FF9896","#91D1C2", "#C7E9C0" ,
++         "#6B6ECF", "#7B4173" )
+> p_traj1 = plot_trajectory(pseudotime_traj1, LIBD@location,clusterlabel,gridnum,cbp,pointsize=5 ,arrowlength=0.2,arrowsize=1,textsize=15 )
+> write.csv(cbind(LIBD@location, pseudotime_traj1), paste(fname, "interface_pseudotime.csv", sep=""))
+> write.csv(p_traj1$Arrowplot1$layers[[1]]$data, paste(fname, "interface_arrow.csv", sep=""))
+> colData(sim)$clusterlabel_refine <- factor(clusterlabel_refine)    
+> sim <-slingshot(sim, clusterLabels = 'clusterlabel_refine', reducedDim = 'DRM',start.clus=clusterlabel_refine[strtoi(args[9])]) 
+> pseudotime_traj1 = slingAvgPseudotime(sim)
+> p_traj1 = plot_trajectory(pseudotime_traj1, LIBD@location,clusterlabel_refine,gridnum,cbp,pointsize=5 ,arrowlength=0.2,arrowsize=1,textsize=15 )
+> write.csv(cbind(LIBD@location, pseudotime_traj1), paste(fname, "refined_interface_pseudotime.csv", sep=""))
+> write.csv(p_traj1$Arrowplot1$layers[[1]]$data, paste(fname, "refined_interface_arrow.csv", sep=""))
+> 
