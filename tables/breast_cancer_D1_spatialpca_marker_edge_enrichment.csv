@@ -1,2 +1,2 @@
 ,Gene_set,Term,Overlap,P-value,Adjusted P-value,Odds Ratio,Genes,group,ordered_group
-11,gs_ind_0,Tuberculosis,2/7,0.001376484383833842,0.016517812606006106,55.8,C3_ITGAX;C3_ITGB2,2,2
+11,gs_ind_0,Tuberculosis,2/7,0.001376484383833842,0.016517812606006106,55.8,C3_ITGB2;C3_ITGAX,2,2

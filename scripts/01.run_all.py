@@ -11,7 +11,8 @@ version('spider-st')
 from spider import SPIDER
 op = SPIDER()
 
-arr = [['PDAC', 'PDAC_A'],
+arr = [
+ ['PDAC', 'PDAC_A'],
  ['DFPLC', '151673'],
  ['DFPLC', '151507'],
  ['DFPLC', '151508'],
@@ -23,12 +24,6 @@ arr = [['PDAC', 'PDAC_A'],
  ['DFPLC', '151672'],
  ['DFPLC', '151675'],
  ['DFPLC', '151676'],
- ['breast_cancer', '1142243F'],
- ['breast_cancer', '1160920F'],
- ['breast_cancer', 'CID4290'],
- ['breast_cancer', 'CID4465'],
- ['breast_cancer', 'CID4535'],
- ['breast_cancer', 'CID44971'],
  ['breast_cancer', 'A1'],
  ['breast_cancer', 'B1'],
  ['breast_cancer', 'C1'],
@@ -37,16 +32,16 @@ arr = [['PDAC', 'PDAC_A'],
  ['breast_cancer', 'F1'],
  ['breast_cancer', 'G2'],
  ['breast_cancer', 'H1'],
- ['mouse_lung', 'D2'],
- ['mouse_lung', 'E4'],
- ['mouse_lung', 'E5'],
  ['mouse_embryo', 'embryo1_2'],
  ['mouse_embryo', 'embryo1_5'],
  ['mouse_embryo', 'embryo2_2'],
  ['mouse_embryo', 'embryo2_5'],
  ['mouse_embryo', 'embryo3_2'],
  ['mouse_embryo', 'embryo3_5'],
- ['slideseq', 'mousebrain']
+ ['mouse_lung', 'D2'],
+ ['mouse_lung', 'E4'],
+ ['mouse_lung', 'E5'],
+ ['slide-seq-v2', 'mousebrain'],
  ]
 
 input1 =  int(sys.argv[1])-1
