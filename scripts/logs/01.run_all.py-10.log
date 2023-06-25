@@ -1,481 +1,0 @@
-2023-06-16 01:07:11.777904: I tensorflow/core/util/port.cc:110] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2023-06-16 01:07:11.780536: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
-2023-06-16 01:07:11.822993: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
-2023-06-16 01:07:11.823681: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2023-06-16 01:07:12.542733: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
--------------------------------------------------------------------------------
-The following dependent module(s) are not currently loaded: ncurses/6.0 (required by: htop/2.0.1)
--------------------------------------------------------------------------------
-
-The following have been reloaded with a version change:
-  1) ncurses/6.0 => ncurses/6.2
-
-ARGUMENT '/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/DFPLC/151672//adata_count.csv' __ignored__
-
-ARGUMENT '/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/DFPLC/151672//adata_meta.csv' __ignored__
-
-ARGUMENT 'Human' __ignored__
-
-ARGUMENT '/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/DFPLC/151672//spatalk' __ignored__
-
-
-R version 4.2.0 (2022-04-22) -- "Vigorous Calisthenics"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
-
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under certain conditions.
-Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
-
-R is a collaborative project with many contributors.
-Type 'contributors()' for more information and
-'citation()' on how to cite R or R packages in publications.
-
-Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for an HTML browser interface to help.
-Type 'q()' to quit R.
-
-> library(SpaTalk)
-Loading required package: ggalluvial
-Loading required package: ggplot2
-Loading required package: doParallel
-Loading required package: foreach
-Loading required package: iterators
-Loading required package: parallel
-Registered S3 method overwritten by 'spatstat.core':
-  method          from
-  formula.glmmPQL MASS
-> # running SpaTalk 
-> # Shao, X., et al. Knowledge-graph-based cell-cell communication inference for spatially resolved transcriptomic data with SpaTalk. Nat Commun 13, 4429 (2022). https://doi.org/10.1038/s41467-022-32111-8
-> # Configurations used on SPIDER are described in Supplementary Methods > Screening ligand-receptor pairs based on the activation of downstream markers
-> 
-> args = commandArgs()
-> 
-> if (length(args)==0) {
-+   stop("not enough input", call.=FALSE)
-+ }
-> 
-> count_f <- args[4]
-> meta_f <- args[5]
-> species <- args[6]
-> out_f <- args[7]
-> 
-> colData <- read.csv(meta_f, stringsAsFactors=FALSE, row.names=1, check.names=F)
-> counts <- read.csv(count_f, row.names=1, check.names=F, stringsAsFactors=FALSE)
-> 
-> obj <- createSpaTalk(st_data = t(as.matrix(counts)),
-+                      st_meta = colData[-4],
-+                      species = species,
-+                      if_st_is_sc = T,
-+                      spot_max_cell = 1,
-+                      celltype = colData$celltype)
-> obj <- find_lr_path(object = obj , lrpairs = lrpairs, pathways = pathways, if_doParallel = F, use_n_cores=1)
-Checking input data 
-Begin to filter lrpairs and pathways 
-***Done*** 
-> 
-> cellname <- unique(colData$celltype)
-> 
-> for (i in 1:length(cellname)) {
-+     try(obj <- dec_cci(object = obj, 
-+                celltype_sender = cellname[i],
-+                celltype_receiver =  cellname[i], 
-+                pvalue=0.1, n_neighbor = 20,
-+                if_doParallel = T,  use_n_cores=10))
-+ }
-Begin to find LR pairs 
-Begin to find LR pairs 
-Begin to find LR pairs 
-Begin to find LR pairs 
-Begin to find LR pairs 
-Error in dec_cci(object = obj, celltype_sender = cellname[i], celltype_receiver = cellname[i],  : 
-  No LR pairs found between TWM and TWM
-> 
-> 
-> try(obj <- dec_cci_all(object = obj, if_doParallel = T, pvalue=0.1, use_n_cores=10, n_neighbor = 20))
-Note: there are 5 cell types and 20 pair-wise cell pairs 
-Begin to find LR pairs 
-Warning messages:
-1: closing unused connection 13 (<-ip6-localhost:11110) 
-2: closing unused connection 12 (<-ip6-localhost:11110) 
-3: closing unused connection 11 (<-ip6-localhost:11110) 
-4: closing unused connection 10 (<-ip6-localhost:11110) 
-5: closing unused connection 9 (<-ip6-localhost:11110) 
-6: closing unused connection 8 (<-ip6-localhost:11110) 
-7: closing unused connection 7 (<-ip6-localhost:11110) 
-8: closing unused connection 6 (<-ip6-localhost:11110) 
-9: closing unused connection 5 (<-ip6-localhost:11110) 
-10: closing unused connection 4 (<-ip6-localhost:11110) 
-> 
-> 
-> write.csv(obj@lrpair, paste0(out_f,"_lrpair.csv"), row.names = TRUE)
-> save(obj, file = paste0(out_f,"_spatalk.RData"))
-> 
-DFPLC 151672
-AnnData object with n_obs × n_vars = 3888 × 33514
-    obs: 'barcode', 'sample_name', 'tissue', 'row', 'col', 'imagerow', 'imagecol', 'Cluster', 'height', 'width', 'sum_umi', 'sum_gene', 'subject', 'position', 'replicate', 'subject_position', 'discard', 'key', 'cell_count', 'SNN_k50_k4', 'SNN_k50_k5', 'SNN_k50_k6', 'SNN_k50_k7', 'SNN_k50_k8', 'SNN_k50_k9', 'SNN_k50_k10', 'SNN_k50_k11', 'SNN_k50_k12', 'SNN_k50_k13', 'SNN_k50_k14', 'SNN_k50_k15', 'SNN_k50_k16', 'SNN_k50_k17', 'SNN_k50_k18', 'SNN_k50_k19', 'SNN_k50_k20', 'SNN_k50_k21', 'SNN_k50_k22', 'SNN_k50_k23', 'SNN_k50_k24', 'SNN_k50_k25', 'SNN_k50_k26', 'SNN_k50_k27', 'SNN_k50_k28', 'GraphBased', 'Maynard', 'Martinowich', 'Layer', 'layer_guess', 'layer_guess_reordered', 'layer_guess_reordered_short', 'expr_chrM', 'expr_chrM_ratio', 'SpatialDE_PCA', 'SpatialDE_pool_PCA', 'HVG_PCA', 'pseudobulk_PCA', 'markers_PCA', 'SpatialDE_UMAP', 'SpatialDE_pool_UMAP', 'HVG_UMAP', 'pseudobulk_UMAP', 'markers_UMAP', 'SpatialDE_PCA_spatial', 'SpatialDE_pool_PCA_spatial', 'HVG_PCA_spatial', 'pseudobulk_PCA_spatial', 'markers_PCA_spatial', 'SpatialDE_UMAP_spatial', 'SpatialDE_pool_UMAP_spatial', 'HVG_UMAP_spatial', 'pseudobulk_UMAP_spatial', 'markers_UMAP_spatial', 'sizeFactor', 'SEDR', 'Seurat', 'SpaGCN', 'BayesSpace', 'stLearn'
-    uns: 'cluster_key', 'coord_type', 'is_human'
-    obsm: 'spatial'
-using spatalk result
-Running imputation with MAGIC
-Calculating MAGIC...
-  Running MAGIC on 3888 cells and 33514 genes.
-  Calculating graph and diffusion operator...
-    Calculating PCA...
-    Calculated PCA in 15.88 seconds.
-    Calculating KNN search...
-    Calculated KNN search in 0.79 seconds.
-    Calculating affinities...
-    Calculated affinities in 0.75 seconds.
-  Calculated graph and diffusion operator in 17.66 seconds.
-  Running MAGIC with `solver='exact'` on 33514-dimensional data may take a long time. Consider denoising specific genes with `genes=<list-like>` or using `solver='approximate'`.
-  Calculating imputation...
-  Calculated imputation in 7.26 seconds.
-Calculated MAGIC in 25.22 seconds.
--------------------------------------------------------------------------------
-The following dependent module(s) are not currently loaded: ncurses/6.0 (required by: htop/2.0.1)
--------------------------------------------------------------------------------
-
-The following have been reloaded with a version change:
-  1) ncurses/6.0 => ncurses/6.2
-
-ARGUMENT '/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/DFPLC/151672/idata_count.csv' __ignored__
-
-ARGUMENT '/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/DFPLC/151672/idata_meta.csv' __ignored__
-
-ARGUMENT '/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/DFPLC/151672/' __ignored__
-
-
-R version 4.2.0 (2022-04-22) -- "Vigorous Calisthenics"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
-
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under certain conditions.
-Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
-
-R is a collaborative project with many contributors.
-Type 'contributors()' for more information and
-'citation()' on how to cite R or R packages in publications.
-
-Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for an HTML browser interface to help.
-Type 'q()' to quit R.
-
-> library(nnSVG)
-> library(STexampleData)
-Loading required package: ExperimentHub
-Loading required package: BiocGenerics
-
-Attaching package: ‘BiocGenerics’
-
-The following objects are masked from ‘package:stats’:
-
-    IQR, mad, sd, var, xtabs
-
-The following objects are masked from ‘package:base’:
-
-    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
-    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
-    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-    union, unique, unsplit, which.max, which.min
-
-Loading required package: AnnotationHub
-Loading required package: BiocFileCache
-Loading required package: dbplyr
-Loading required package: SpatialExperiment
-Loading required package: SingleCellExperiment
-Loading required package: SummarizedExperiment
-Loading required package: MatrixGenerics
-Loading required package: matrixStats
-
-Attaching package: ‘MatrixGenerics’
-
-The following objects are masked from ‘package:matrixStats’:
-
-    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
-    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
-    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
-    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
-    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
-    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
-    colWeightedMeans, colWeightedMedians, colWeightedSds,
-    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
-    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
-    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
-    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
-    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
-    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
-    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
-    rowWeightedSds, rowWeightedVars
-
-Loading required package: GenomicRanges
-Loading required package: stats4
-Loading required package: S4Vectors
-
-Attaching package: ‘S4Vectors’
-
-The following objects are masked from ‘package:base’:
-
-    expand.grid, I, unname
-
-Loading required package: IRanges
-Loading required package: GenomeInfoDb
-Loading required package: Biobase
-Welcome to Bioconductor
-
-    Vignettes contain introductory material; view with
-    'browseVignettes()'. To cite Bioconductor, see
-    'citation("Biobase")', and for packages 'citation("pkgname")'.
-
-
-Attaching package: ‘Biobase’
-
-The following object is masked from ‘package:MatrixGenerics’:
-
-    rowMedians
-
-The following objects are masked from ‘package:matrixStats’:
-
-    anyMissing, rowMedians
-
-The following object is masked from ‘package:ExperimentHub’:
-
-    cache
-
-The following object is masked from ‘package:AnnotationHub’:
-
-    cache
-
-> library(scran)
-Loading required package: scuttle
-> 
-> args = commandArgs()
-> 
-> if (length(args)==0) {
-+   stop("not enough input", call.=FALSE)
-+ }
-> 
-> count_f <- args[4]
-> meta_f <- args[5]
-> out_f <- args[6]
-> 
-> counts <- read.csv(count_f, row.names=1, check.names=F, stringsAsFactors=FALSE)
-> colData <- read.csv(meta_f, stringsAsFactors=FALSE, row.names=1, check.names=F)
-> rowData <- data.frame(gene_name=colnames(counts))
-> head(rowData)
-      gene_name
-1 SEMA6A_PLXNA4
-2 SEMA3A_PLXNA2
-3    IGF1_IGF1R
-4    PTH2_RAMP2
-5  VEGFA_GRIN2B
-6     EGF_ERBB4
-> spe <-  SpatialExperiment(
-+     assay = list(counts = t(counts)), 
-+     colData = colData, 
-+     rowData = rowData,
-+     spatialCoordsNames = c("row", "col"))
-> spe <- filter_genes(spe)
-Gene filtering: removing mitochondrial genes
-removed 0 mitochondrial genes
-Gene filtering: retaining genes with at least 3 counts in at least 0.5% (n = 8) of spatial locations
-removed 0 out of 305 genes due to low expression
-> spe <- computeLibraryFactors(spe)
-> spe <- logNormCounts(spe)
-> 
-> spe <- nnSVG(spe, n_threads = 1)
-> 
-> write.csv(rowData(spe), paste0(out_f,"nnSVG.csv"), row.names = TRUE)
-> 
-scoring
-using sqrt+max
-Construct idata with 7582 interfaces and 305 LR pairs.
-using 38*38 SOM nodes for 7582 points
-Added key nnSVG in idata.uns
-Models:   0%|          | 0/10 [00:00<?, ?it/s]
-  0%|          | 0/305 [00:00<?, ?it/s][A
- 12%|█▏        | 36/305 [00:00<00:00, 357.11it/s][A
- 24%|██▍       | 73/305 [00:00<00:00, 359.86it/s][A
- 36%|███▌      | 109/305 [00:00<00:00, 351.28it/s][A
- 48%|████▊     | 145/305 [00:00<00:00, 353.08it/s][A
- 59%|█████▉    | 181/305 [00:00<00:00, 352.80it/s][A
- 71%|███████▏  | 218/305 [00:00<00:00, 354.72it/s][A
- 83%|████████▎ | 254/305 [00:00<00:00, 352.28it/s][A
- 96%|█████████▌| 292/305 [00:00<00:00, 359.81it/s][A
-                                                  [AModels:  10%|█         | 1/10 [00:00<00:07,  1.16it/s]
-  0%|          | 0/305 [00:00<?, ?it/s][A
-  8%|▊         | 23/305 [00:00<00:01, 225.89it/s][A
- 15%|█▌        | 46/305 [00:00<00:01, 227.91it/s][A
- 24%|██▍       | 74/305 [00:00<00:00, 250.34it/s][A
- 33%|███▎      | 100/305 [00:00<00:00, 225.23it/s][A
- 40%|████      | 123/305 [00:00<00:00, 218.90it/s][A
- 48%|████▊     | 146/305 [00:00<00:00, 213.73it/s][A
- 55%|█████▌    | 168/305 [00:00<00:00, 197.38it/s][A
- 63%|██████▎   | 193/305 [00:00<00:00, 210.28it/s][A
- 70%|███████   | 215/305 [00:01<00:00, 172.00it/s][A
- 77%|███████▋  | 234/305 [00:01<00:00, 166.42it/s][A
- 83%|████████▎ | 252/305 [00:01<00:00, 154.64it/s][A
- 91%|█████████ | 277/305 [00:01<00:00, 174.97it/s][A
- 97%|█████████▋| 296/305 [00:01<00:00, 156.39it/s][A
-                                                  [AModels:  20%|██        | 2/10 [00:02<00:10,  1.33s/it]
-  0%|          | 0/305 [00:00<?, ?it/s][A
-  9%|▉         | 27/305 [00:00<00:01, 251.47it/s][A
- 19%|█▊        | 57/305 [00:00<00:00, 279.11it/s][A
- 31%|███       | 95/305 [00:00<00:00, 324.28it/s][A
- 44%|████▍     | 134/305 [00:00<00:00, 348.10it/s][A
- 56%|█████▋    | 172/305 [00:00<00:00, 358.33it/s][A
- 69%|██████▉   | 210/305 [00:00<00:00, 365.60it/s][A
- 82%|████████▏ | 249/305 [00:00<00:00, 370.97it/s][A
- 94%|█████████▍| 288/305 [00:00<00:00, 376.28it/s][A
-                                                  [AModels:  30%|███       | 3/10 [00:03<00:07,  1.12s/it]
-  0%|          | 0/305 [00:00<?, ?it/s][A
- 13%|█▎        | 40/305 [00:00<00:00, 394.72it/s][A
- 26%|██▌       | 80/305 [00:00<00:00, 395.76it/s][A
- 40%|███▉      | 121/305 [00:00<00:00, 398.63it/s][A
- 53%|█████▎    | 161/305 [00:00<00:00, 392.18it/s][A
- 66%|██████▌   | 201/305 [00:00<00:00, 394.02it/s][A
- 79%|███████▉  | 241/305 [00:00<00:00, 392.44it/s][A
- 92%|█████████▏| 281/305 [00:00<00:00, 392.55it/s][A
-                                                  [AModels:  40%|████      | 4/10 [00:04<00:05,  1.02it/s]
-  0%|          | 0/305 [00:00<?, ?it/s][A
- 13%|█▎        | 40/305 [00:00<00:00, 399.25it/s][A
- 28%|██▊       | 86/305 [00:00<00:00, 432.86it/s][A
- 43%|████▎     | 132/305 [00:00<00:00, 444.67it/s][A
- 58%|█████▊    | 177/305 [00:00<00:00, 443.73it/s][A
- 73%|███████▎  | 222/305 [00:00<00:00, 445.56it/s][A
- 88%|████████▊ | 269/305 [00:00<00:00, 453.62it/s][A
-                                                  [AModels:  50%|█████     | 5/10 [00:04<00:04,  1.15it/s]
-  0%|          | 0/305 [00:00<?, ?it/s][A
- 16%|█▌        | 48/305 [00:00<00:00, 478.22it/s][A
- 31%|███▏      | 96/305 [00:00<00:00, 474.13it/s][A
- 47%|████▋     | 144/305 [00:00<00:00, 468.55it/s][A
- 63%|██████▎   | 191/305 [00:00<00:00, 455.04it/s][A
- 78%|███████▊  | 238/305 [00:00<00:00, 459.57it/s][A
- 94%|█████████▍| 288/305 [00:00<00:00, 471.43it/s][A
-                                                  [AModels:  60%|██████    | 6/10 [00:05<00:03,  1.25it/s]
-  0%|          | 0/305 [00:00<?, ?it/s][A
- 15%|█▍        | 45/305 [00:00<00:00, 447.51it/s][A
- 30%|██▉       | 90/305 [00:00<00:00, 432.39it/s][A
- 44%|████▍     | 134/305 [00:00<00:00, 420.49it/s][A
- 58%|█████▊    | 177/305 [00:00<00:00, 417.52it/s][A
- 72%|███████▏  | 220/305 [00:00<00:00, 418.97it/s][A
- 86%|████████▌ | 263/305 [00:00<00:00, 421.74it/s][A
-                                                  [AModels:  70%|███████   | 7/10 [00:06<00:02,  1.29it/s]
-  0%|          | 0/305 [00:00<?, ?it/s][A
- 14%|█▍        | 42/305 [00:00<00:00, 413.84it/s][A
- 28%|██▊       | 84/305 [00:00<00:00, 413.85it/s][A
- 41%|████▏     | 126/305 [00:00<00:00, 414.52it/s][A
- 55%|█████▌    | 168/305 [00:00<00:00, 415.25it/s][A
- 69%|██████▉   | 211/305 [00:00<00:00, 419.11it/s][A
- 84%|████████▍ | 256/305 [00:00<00:00, 427.67it/s][A
- 98%|█████████▊| 299/305 [00:00<00:00, 428.20it/s][A
-                                                  [AModels:  80%|████████  | 8/10 [00:06<00:01,  1.32it/s]
-  0%|          | 0/305 [00:00<?, ?it/s][A
- 18%|█▊        | 55/305 [00:00<00:00, 542.59it/s][A
- 36%|███▌      | 110/305 [00:00<00:00, 546.24it/s][A
- 54%|█████▍    | 166/305 [00:00<00:00, 549.73it/s][A
- 72%|███████▏  | 221/305 [00:00<00:00, 542.12it/s][A
- 90%|█████████ | 276/305 [00:00<00:00, 537.53it/s][A
-                                                  [AModels:  90%|█████████ | 9/10 [00:07<00:00,  1.43it/s]
-  0%|          | 0/305 [00:00<?, ?it/s][A
- 19%|█▊        | 57/305 [00:00<00:00, 562.29it/s][A
- 38%|███▊      | 116/305 [00:00<00:00, 574.79it/s][A
- 57%|█████▋    | 175/305 [00:00<00:00, 577.48it/s][A
- 76%|███████▋  | 233/305 [00:00<00:00, 545.64it/s][A
- 95%|█████████▌| 290/305 [00:00<00:00, 553.49it/s][A
-                                                  [AModels: 100%|██████████| 10/10 [00:08<00:00,  1.53it/s]Models: 100%|██████████| 10/10 [00:08<00:00,  1.24it/s]
-2023-06-16 02:58:12.165565: I tensorflow/compiler/xla/service/service.cc:169] XLA service 0x5559b3e6e9a0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-2023-06-16 02:58:12.165727: I tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): Host, Default Version
-2023-06-16 02:58:12.202939: I ./tensorflow/compiler/jit/device_compiler.h:180] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
-Added key SOMDE in idata.uns
-  0%|          | 0/305 [00:00<?, ?it/s]2023-06-16 02:58:12.735559: I tensorflow/core/grappler/optimizers/data/replicate_on_split.cc:32] Running replicate on split optimization
-2023-06-16 02:58:12.749381: I tensorflow/core/common_runtime/executor.cc:1197] [/device:CPU:0] (DEBUG INFO) Executor start aborting (this does not indicate an error and you can ignore this message): INVALID_ARGUMENT: You must feed a value for placeholder tensor 'Placeholder/_4' with dtype int32
-	 [[{{node Placeholder/_4}}]]
-2023-06-16 02:58:12.749654: I tensorflow/core/common_runtime/executor.cc:1197] [/device:CPU:0] (DEBUG INFO) Executor start aborting (this does not indicate an error and you can ignore this message): INVALID_ARGUMENT: You must feed a value for placeholder tensor 'Placeholder/_4' with dtype int32
-	 [[{{node Placeholder/_4}}]]
-2023-06-16 02:58:12.965851: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
-  0%|          | 1/305 [00:01<05:48,  1.15s/it]  1%|          | 3/305 [00:01<01:59,  2.52it/s]  2%|▏         | 5/305 [00:01<01:12,  4.16it/s]  2%|▏         | 6/305 [00:01<01:04,  4.66it/s]  3%|▎         | 8/305 [00:01<00:43,  6.81it/s]  3%|▎         | 10/305 [00:02<00:42,  6.88it/s]  4%|▎         | 11/305 [00:02<00:46,  6.38it/s]  4%|▍         | 13/305 [00:02<00:38,  7.63it/s]  5%|▍         | 14/305 [00:02<00:39,  7.42it/s]  5%|▍         | 15/305 [00:02<00:37,  7.84it/s]  5%|▌         | 16/305 [00:02<00:40,  7.18it/s]  6%|▌         | 17/305 [00:03<00:42,  6.84it/s]  6%|▌         | 18/305 [00:03<00:38,  7.41it/s]  6%|▌         | 19/305 [00:03<00:38,  7.43it/s]  7%|▋         | 21/305 [00:03<00:33,  8.42it/s]  8%|▊         | 23/305 [00:03<00:32,  8.58it/s]  8%|▊         | 25/305 [00:03<00:27, 10.01it/s]  9%|▉         | 27/305 [00:04<00:26, 10.34it/s] 10%|▉         | 29/305 [00:04<00:25, 10.87it/s] 10%|█         | 31/305 [00:04<00:37,  7.27it/s] 10%|█         | 32/305 [00:04<00:38,  7.06it/s] 11%|█         | 33/305 [00:05<00:36,  7.43it/s] 11%|█         | 34/305 [00:05<00:35,  7.53it/s] 12%|█▏        | 36/305 [00:05<00:30,  8.90it/s] 12%|█▏        | 37/305 [00:05<00:29,  8.97it/s] 13%|█▎        | 39/305 [00:05<00:27,  9.67it/s] 14%|█▍        | 42/305 [00:05<00:20, 12.85it/s] 14%|█▍        | 44/305 [00:05<00:20, 12.66it/s] 15%|█▌        | 46/305 [00:06<00:20, 12.46it/s] 16%|█▌        | 48/305 [00:06<00:34,  7.51it/s] 16%|█▋        | 50/305 [00:06<00:30,  8.35it/s] 17%|█▋        | 52/305 [00:06<00:27,  9.23it/s] 18%|█▊        | 54/305 [00:07<00:28,  8.78it/s] 18%|█▊        | 56/305 [00:07<00:29,  8.47it/s] 19%|█▊        | 57/305 [00:07<00:29,  8.36it/s] 19%|█▉        | 59/305 [00:07<00:28,  8.55it/s] 20%|██        | 61/305 [00:07<00:24,  9.84it/s] 21%|██        | 63/305 [00:08<00:25,  9.44it/s] 21%|██▏       | 65/305 [00:08<00:21, 11.10it/s] 22%|██▏       | 67/305 [00:08<00:24,  9.55it/s] 23%|██▎       | 69/305 [00:08<00:28,  8.27it/s] 23%|██▎       | 70/305 [00:08<00:28,  8.32it/s] 24%|██▎       | 72/305 [00:09<00:30,  7.68it/s] 24%|██▍       | 74/305 [00:09<00:27,  8.51it/s] 25%|██▍       | 75/305 [00:09<00:26,  8.68it/s] 25%|██▍       | 76/305 [00:09<00:28,  8.03it/s] 26%|██▌       | 78/305 [00:09<00:23,  9.47it/s] 26%|██▌       | 79/305 [00:09<00:25,  8.86it/s] 26%|██▌       | 80/305 [00:10<00:27,  8.16it/s] 27%|██▋       | 81/305 [00:10<00:30,  7.33it/s] 27%|██▋       | 83/305 [00:10<00:23,  9.54it/s] 28%|██▊       | 85/305 [00:10<00:28,  7.64it/s] 28%|██▊       | 86/305 [00:10<00:31,  6.98it/s] 29%|██▊       | 87/305 [00:11<00:36,  5.90it/s] 29%|██▉       | 88/305 [00:11<00:38,  5.61it/s] 30%|██▉       | 90/305 [00:11<00:32,  6.65it/s] 30%|██▉       | 91/305 [00:11<00:30,  6.98it/s] 30%|███       | 93/305 [00:11<00:23,  9.07it/s] 31%|███       | 95/305 [00:12<00:24,  8.49it/s] 32%|███▏      | 97/305 [00:12<00:23,  8.82it/s] 32%|███▏      | 99/305 [00:12<00:21,  9.63it/s] 33%|███▎      | 102/305 [00:12<00:21,  9.54it/s] 34%|███▍      | 103/305 [00:13<00:23,  8.51it/s] 34%|███▍      | 105/305 [00:13<00:19, 10.40it/s] 35%|███▌      | 107/305 [00:13<00:19, 10.28it/s] 36%|███▌      | 109/305 [00:13<00:20,  9.44it/s] 36%|███▋      | 111/305 [00:13<00:21,  8.86it/s] 37%|███▋      | 112/305 [00:14<00:23,  8.35it/s] 37%|███▋      | 114/305 [00:14<00:19,  9.93it/s] 38%|███▊      | 117/305 [00:14<00:17, 11.02it/s] 39%|███▉      | 119/305 [00:14<00:16, 11.17it/s] 40%|███▉      | 121/305 [00:14<00:16, 10.87it/s] 40%|████      | 123/305 [00:14<00:18, 10.06it/s] 41%|████      | 125/305 [00:15<00:15, 11.31it/s] 42%|████▏     | 127/305 [00:15<00:14, 12.35it/s] 42%|████▏     | 129/305 [00:15<00:15, 11.17it/s] 43%|████▎     | 131/305 [00:15<00:16, 10.59it/s] 44%|████▎     | 133/305 [00:15<00:16, 10.22it/s] 44%|████▍     | 135/305 [00:16<00:16, 10.03it/s] 45%|████▍     | 137/305 [00:16<00:16,  9.90it/s] 46%|████▌     | 139/305 [00:16<00:15, 10.42it/s] 46%|████▌     | 141/305 [00:16<00:18,  9.09it/s] 47%|████▋     | 143/305 [00:16<00:15, 10.37it/s] 48%|████▊     | 145/305 [00:17<00:16,  9.88it/s] 48%|████▊     | 147/305 [00:17<00:17,  8.85it/s] 49%|████▉     | 149/305 [00:17<00:15, 10.07it/s] 50%|████▉     | 151/305 [00:17<00:13, 11.40it/s] 50%|█████     | 153/305 [00:17<00:12, 12.50it/s] 51%|█████     | 156/305 [00:18<00:12, 11.73it/s] 52%|█████▏    | 158/305 [00:18<00:13, 11.04it/s] 52%|█████▏    | 160/305 [00:18<00:13, 10.46it/s] 53%|█████▎    | 162/305 [00:18<00:14,  9.98it/s] 54%|█████▍    | 164/305 [00:18<00:14,  9.59it/s] 54%|█████▍    | 165/305 [00:19<00:14,  9.35it/s] 55%|█████▍    | 167/305 [00:19<00:13, 10.46it/s] 55%|█████▌    | 169/305 [00:19<00:11, 11.55it/s] 56%|█████▌    | 171/305 [00:19<00:12, 10.31it/s] 57%|█████▋    | 173/305 [00:19<00:11, 11.84it/s] 57%|█████▋    | 175/305 [00:19<00:12, 10.64it/s] 58%|█████▊    | 177/305 [00:20<00:12, 10.43it/s] 59%|█████▊    | 179/305 [00:20<00:11, 11.20it/s] 59%|█████▉    | 181/305 [00:20<00:12, 10.15it/s] 60%|██████    | 183/305 [00:20<00:15,  7.95it/s] 61%|██████    | 185/305 [00:21<00:13,  9.01it/s] 61%|██████▏   | 187/305 [00:21<00:13,  9.03it/s] 62%|██████▏   | 188/305 [00:21<00:13,  8.81it/s] 62%|██████▏   | 190/305 [00:21<00:11,  9.78it/s] 63%|██████▎   | 192/305 [00:21<00:12,  9.19it/s] 64%|██████▎   | 194/305 [00:21<00:10, 10.75it/s] 64%|██████▍   | 196/305 [00:22<00:10, 10.49it/s] 65%|██████▍   | 198/305 [00:22<00:10, 10.31it/s] 66%|██████▌   | 200/305 [00:22<00:09, 10.57it/s] 66%|██████▌   | 202/305 [00:22<00:08, 12.24it/s] 67%|██████▋   | 205/305 [00:22<00:06, 14.71it/s] 68%|██████▊   | 207/305 [00:22<00:07, 13.29it/s] 69%|██████▊   | 209/305 [00:23<00:07, 12.20it/s] 69%|██████▉   | 211/305 [00:23<00:09, 10.26it/s] 70%|██████▉   | 213/305 [00:23<00:08, 10.56it/s] 70%|███████   | 215/305 [00:23<00:08, 10.04it/s] 71%|███████   | 217/305 [00:23<00:08, 10.40it/s] 72%|███████▏  | 219/305 [00:24<00:08, 10.62it/s] 72%|███████▏  | 221/305 [00:24<00:08,  9.95it/s] 73%|███████▎  | 223/305 [00:24<00:08, 10.14it/s] 74%|███████▍  | 225/305 [00:24<00:07, 10.24it/s] 74%|███████▍  | 227/305 [00:24<00:07, 11.02it/s] 75%|███████▌  | 229/305 [00:25<00:06, 11.43it/s] 76%|███████▌  | 232/305 [00:25<00:05, 14.37it/s] 77%|███████▋  | 234/305 [00:25<00:06, 11.69it/s] 77%|███████▋  | 236/305 [00:25<00:06, 10.83it/s] 78%|███████▊  | 238/305 [00:25<00:07,  9.30it/s] 79%|███████▊  | 240/305 [00:26<00:06, 10.37it/s] 79%|███████▉  | 242/305 [00:26<00:06,  9.49it/s] 80%|████████  | 244/305 [00:26<00:07,  8.49it/s] 81%|████████  | 246/305 [00:26<00:06,  9.01it/s] 81%|████████▏ | 248/305 [00:26<00:06,  9.42it/s] 82%|████████▏ | 250/305 [00:27<00:05,  9.42it/s] 82%|████████▏ | 251/305 [00:27<00:06,  8.10it/s] 83%|████████▎ | 253/305 [00:27<00:06,  8.64it/s] 83%|████████▎ | 254/305 [00:27<00:05,  8.86it/s] 84%|████████▍ | 256/305 [00:27<00:04, 10.05it/s] 85%|████████▍ | 258/305 [00:28<00:04, 10.17it/s] 85%|████████▌ | 260/305 [00:28<00:05,  8.99it/s] 86%|████████▌ | 261/305 [00:28<00:04,  9.06it/s] 86%|████████▌ | 262/305 [00:28<00:04,  8.93it/s] 86%|████████▌ | 263/305 [00:28<00:04,  8.50it/s] 87%|████████▋ | 264/305 [00:28<00:05,  7.90it/s] 87%|████████▋ | 265/305 [00:29<00:05,  6.81it/s] 88%|████████▊ | 267/305 [00:29<00:05,  7.30it/s] 88%|████████▊ | 269/305 [00:29<00:04,  8.26it/s] 89%|████████▉ | 271/305 [00:29<00:03,  9.03it/s] 89%|████████▉ | 272/305 [00:29<00:03,  8.36it/s] 90%|████████▉ | 273/305 [00:29<00:04,  7.85it/s] 90%|████████▉ | 274/305 [00:30<00:03,  7.82it/s] 90%|█████████ | 276/305 [00:30<00:03,  9.18it/s] 91%|█████████ | 277/305 [00:30<00:03,  8.93it/s] 91%|█████████▏| 279/305 [00:30<00:03,  8.08it/s] 92%|█████████▏| 281/305 [00:30<00:02,  9.82it/s] 93%|█████████▎| 283/305 [00:30<00:02, 10.06it/s] 93%|█████████▎| 285/305 [00:31<00:01, 10.29it/s] 94%|█████████▍| 287/305 [00:31<00:01,  9.86it/s] 95%|█████████▍| 289/305 [00:31<00:01,  9.81it/s] 95%|█████████▌| 291/305 [00:31<00:01,  8.41it/s] 96%|█████████▌| 293/305 [00:32<00:01,  9.61it/s] 97%|█████████▋| 295/305 [00:32<00:01,  9.85it/s] 97%|█████████▋| 297/305 [00:32<00:00,  9.12it/s] 98%|█████████▊| 299/305 [00:32<00:00,  9.82it/s] 99%|█████████▊| 301/305 [00:32<00:00, 10.73it/s] 99%|█████████▉| 303/305 [00:32<00:00, 11.14it/s]100%|██████████| 305/305 [00:33<00:00, 10.62it/s]100%|██████████| 305/305 [00:33<00:00,  9.19it/s]
--------------------------------------------------------------------------------
-The following dependent module(s) are not currently loaded: ncurses/6.0 (required by: htop/2.0.1)
--------------------------------------------------------------------------------
-
-The following have been reloaded with a version change:
-  1) ncurses/6.0 => ncurses/6.2
-
-ARGUMENT '/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/DFPLC/151672/idata_count.csv' __ignored__
-
-ARGUMENT '/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/DFPLC/151672/idata_meta.csv' __ignored__
-
-ARGUMENT '/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/DFPLC/151672/' __ignored__
-
-
-R version 4.2.0 (2022-04-22) -- "Vigorous Calisthenics"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
-
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under certain conditions.
-Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
-
-R is a collaborative project with many contributors.
-Type 'contributors()' for more information and
-'citation()' on how to cite R or R packages in publications.
-
-Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for an HTML browser interface to help.
-Type 'q()' to quit R.
-
-> library('SPARK')
-> args = commandArgs()
-> 
-> if (length(args)==0) {
-+   stop("not enough input", call.=FALSE)
-+ }
-> 
-> count_f <- args[4]
-> meta_f <- args[5]
-> out_f <- args[6]
-> 
-> counts <- t(read.csv(count_f, row.names=1, check.names=F, stringsAsFactors=FALSE))
-> info <- read.csv(meta_f, stringsAsFactors=FALSE, row.names=1, check.names=F)
-> sparkX <- sparkx(as.matrix(counts),as.matrix(info[,1:2]),numCores=10,option="mixture")
-## ===== SPARK-X INPUT INFORMATION ==== 
-## number of total samples: 1444 
-## number of total genes: 305 
-## Running with 10 cores 
-## Testing With Projection Kernel
-## Testing With Gaussian Kernel 1
-## Testing With Gaussian Kernel 2
-## Testing With Gaussian Kernel 3
-## Testing With Gaussian Kernel 4
-## Testing With Gaussian Kernel 5
-## Testing With Cosine Kernel 1
-## Testing With Cosine Kernel 2
-## Testing With Cosine Kernel 3
-## Testing With Cosine Kernel 4
-## Testing With Cosine Kernel 5
-> write.csv(sparkX$res_mtest, paste0(out_f,"SPARKX.csv"), row.names = TRUE)
-> 
-Added key SpatialDE in idata.uns
-Added key SPARKX in idata.uns
-Added key scGCO in idata.uns
-  0%|          | 0/1000 [00:00<?, ?/s]  0%|          | 1/1000 [00:05<1:38:52,  5.94s/]  0%|          | 3/1000 [00:06<26:14,  1.58s/]    1%|          | 6/1000 [00:06<10:27,  1.58/s]  1%|          | 9/1000 [00:06<05:49,  2.83/s]  1%|          | 12/1000 [00:06<03:42,  4.43/s]  2%|▏         | 15/1000 [00:06<02:33,  6.40/s]  2%|▏         | 18/1000 [00:06<01:52,  8.72/s]  2%|▏         | 21/1000 [00:06<01:26, 11.29/s]  2%|▏         | 24/1000 [00:06<01:09, 14.01/s]  3%|▎         | 27/1000 [00:06<00:58, 16.70/s]  3%|▎         | 30/1000 [00:06<00:50, 19.12/s]  3%|▎         | 33/1000 [00:07<00:45, 21.38/s]  4%|▎         | 36/1000 [00:07<00:41, 23.23/s]  4%|▍         | 39/1000 [00:07<00:38, 24.72/s]  4%|▍         | 42/1000 [00:07<00:37, 25.80/s]  4%|▍         | 45/1000 [00:07<00:35, 26.58/s]  5%|▍         | 48/1000 [00:07<00:34, 27.20/s]  5%|▌         | 51/1000 [00:07<00:34, 27.62/s]  5%|▌         | 54/1000 [00:07<00:33, 27.90/s]  6%|▌         | 57/1000 [00:07<00:33, 27.89/s]  6%|▌         | 60/1000 [00:08<00:33, 28.17/s]  6%|▋         | 63/1000 [00:08<00:32, 28.44/s]  7%|▋         | 66/1000 [00:08<00:32, 28.58/s]  7%|▋         | 69/1000 [00:08<00:32, 28.68/s]  7%|▋         | 73/1000 [00:08<00:29, 31.46/s]  8%|▊         | 79/1000 [00:08<00:23, 39.10/s]  9%|▊         | 86/1000 [00:08<00:19, 47.18/s]  9%|▉         | 93/1000 [00:08<00:17, 53.12/s] 10%|▉         | 99/1000 [00:08<00:16, 55.04/s] 11%|█         | 107/1000 [00:08<00:15, 57.24/s] 11%|█▏        | 114/1000 [00:09<00:15, 58.86/s] 12%|█▏        | 121/1000 [00:09<00:14, 60.45/s] 13%|█▎        | 129/1000 [00:09<00:13, 64.48/s] 14%|█▎        | 136/1000 [00:09<00:15, 55.05/s] 14%|█▍        | 142/1000 [00:09<00:15, 55.31/s] 15%|█▍        | 149/1000 [00:09<00:19, 43.82/s] 15%|█▌        | 154/1000 [00:10<00:22, 37.22/s] 16%|█▌        | 159/1000 [00:10<00:39, 21.19/s] 16%|█▋        | 163/1000 [00:10<00:43, 19.10/s] 17%|█▋        | 166/1000 [00:10<00:41, 20.04/s] 17%|█▋        | 169/1000 [00:11<00:42, 19.54/s] 17%|█▋        | 172/1000 [00:11<00:40, 20.43/s] 18%|█▊        | 176/1000 [00:11<00:34, 23.57/s] 18%|█▊        | 179/1000 [00:11<00:36, 22.78/s] 18%|█▊        | 183/1000 [00:11<00:31, 25.67/s] 19%|█▊        | 187/1000 [00:11<00:28, 28.90/s] 19%|█▉        | 194/1000 [00:11<00:21, 36.85/s] 20%|██        | 202/1000 [00:11<00:17, 45.81/s] 21%|██        | 210/1000 [00:12<00:14, 53.76/s] 22%|██▏       | 216/1000 [00:12<00:14, 54.63/s] 22%|██▏       | 223/1000 [00:12<00:13, 58.38/s] 23%|██▎       | 230/1000 [00:12<00:12, 60.92/s] 24%|██▎       | 237/1000 [00:12<00:12, 60.10/s] 24%|██▍       | 245/1000 [00:12<00:12, 61.07/s] 25%|██▌       | 252/1000 [00:12<00:11, 62.73/s] 26%|██▌       | 260/1000 [00:12<00:11, 66.50/s] 27%|██▋       | 267/1000 [00:12<00:11, 65.31/s] 27%|██▋       | 274/1000 [00:13<00:11, 61.78/s] 28%|██▊       | 282/1000 [00:13<00:11, 64.90/s] 29%|██▉       | 289/1000 [00:13<00:10, 65.35/s] 30%|██▉       | 296/1000 [00:13<00:10, 65.44/s] 30%|███       | 303/1000 [00:13<00:10, 65.78/s] 31%|███       | 310/1000 [00:13<00:10, 66.01/s] 32%|███▏      | 317/1000 [00:13<00:10, 65.47/s] 32%|███▏      | 324/1000 [00:13<00:11, 61.21/s] 33%|███▎      | 332/1000 [00:13<00:10, 64.28/s] 34%|███▍      | 340/1000 [00:14<00:09, 67.41/s] 35%|███▍      | 347/1000 [00:14<00:10, 64.52/s] 35%|███▌      | 354/1000 [00:14<00:10, 64.14/s] 36%|███▌      | 362/1000 [00:14<00:09, 68.01/s] 37%|███▋      | 370/1000 [00:14<00:09, 64.10/s] 38%|███▊      | 377/1000 [00:14<00:10, 61.25/s] 38%|███▊      | 384/1000 [00:14<00:10, 57.46/s] 39%|███▉      | 391/1000 [00:14<00:10, 59.86/s] 40%|███▉      | 398/1000 [00:15<00:10, 59.00/s] 41%|████      | 406/1000 [00:15<00:09, 63.74/s] 41%|████▏     | 413/1000 [00:15<00:11, 51.47/s] 42%|████▏     | 419/1000 [00:15<00:10, 53.09/s] 43%|████▎     | 428/1000 [00:15<00:09, 58.10/s] 44%|████▎     | 436/1000 [00:15<00:09, 60.18/s] 44%|████▍     | 444/1000 [00:15<00:08, 63.34/s] 45%|████▌     | 452/1000 [00:15<00:08, 67.59/s] 46%|████▌     | 462/1000 [00:16<00:07, 72.46/s] 47%|████▋     | 470/1000 [00:16<00:07, 69.63/s] 48%|████▊     | 478/1000 [00:16<00:08, 62.04/s] 49%|████▉     | 488/1000 [00:16<00:07, 69.24/s] 50%|█████     | 500/1000 [00:16<00:06, 79.11/s] 51%|█████     | 511/1000 [00:16<00:05, 84.11/s] 52%|█████▎    | 525/1000 [00:16<00:04, 97.03/s] 54%|█████▎    | 536/1000 [00:16<00:04, 100.20/s] 55%|█████▌    | 551/1000 [00:16<00:03, 112.73/s] 56%|█████▋    | 563/1000 [00:17<00:04, 105.93/s] 57%|█████▋    | 574/1000 [00:17<00:04, 105.42/s] 58%|█████▊    | 585/1000 [00:17<00:04, 99.70/s]  60%|█████▉    | 599/1000 [00:17<00:03, 108.08/s] 61%|██████    | 610/1000 [00:17<00:03, 106.24/s] 62%|██████▏   | 621/1000 [00:17<00:03, 104.27/s] 63%|██████▎   | 632/1000 [00:17<00:03, 99.66/s]  64%|██████▍   | 643/1000 [00:17<00:03, 93.21/s] 65%|██████▌   | 653/1000 [00:18<00:03, 94.36/s] 66%|██████▋   | 663/1000 [00:18<00:03, 94.32/s] 67%|██████▋   | 674/1000 [00:18<00:03, 97.32/s] 68%|██████▊   | 684/1000 [00:18<00:03, 95.05/s] 69%|██████▉   | 694/1000 [00:18<00:03, 89.24/s] 70%|███████   | 704/1000 [00:18<00:03, 88.50/s] 71%|███████▏  | 713/1000 [00:18<00:03, 85.73/s] 72%|███████▎  | 725/1000 [00:18<00:03, 91.19/s] 74%|███████▎  | 736/1000 [00:18<00:02, 95.88/s] 75%|███████▍  | 746/1000 [00:19<00:02, 96.86/s] 76%|███████▌  | 757/1000 [00:19<00:02, 98.48/s] 77%|███████▋  | 770/1000 [00:19<00:02, 105.31/s] 78%|███████▊  | 781/1000 [00:19<00:02, 104.28/s] 79%|███████▉  | 792/1000 [00:19<00:01, 104.49/s] 80%|████████  | 804/1000 [00:19<00:01, 106.60/s] 82%|████████▏ | 817/1000 [00:19<00:01, 107.07/s] 83%|████████▎ | 828/1000 [00:19<00:01, 105.62/s] 84%|████████▍ | 839/1000 [00:19<00:01, 98.91/s]  85%|████████▍ | 849/1000 [00:20<00:01, 94.63/s] 86%|████████▌ | 861/1000 [00:20<00:01, 97.84/s] 87%|████████▋ | 872/1000 [00:20<00:01, 100.23/s] 88%|████████▊ | 883/1000 [00:20<00:01, 93.38/s]  89%|████████▉ | 893/1000 [00:20<00:01, 93.68/s] 90%|█████████ | 903/1000 [00:20<00:01, 89.60/s] 91%|█████████▏| 913/1000 [00:20<00:00, 89.08/s] 92%|█████████▏| 923/1000 [00:20<00:00, 91.16/s] 93%|█████████▎| 933/1000 [00:21<00:00, 78.50/s] 94%|█████████▍| 942/1000 [00:21<00:00, 75.16/s] 95%|█████████▌| 950/1000 [00:21<00:00, 70.00/s] 96%|█████████▌| 958/1000 [00:21<00:00, 65.42/s] 96%|█████████▋| 965/1000 [00:21<00:00, 54.38/s] 97%|█████████▋| 971/1000 [00:21<00:00, 46.18/s] 98%|█████████▊| 976/1000 [00:21<00:00, 41.04/s] 98%|█████████▊| 981/1000 [00:22<00:00, 38.74/s] 99%|█████████▊| 986/1000 [00:22<00:00, 35.89/s] 99%|█████████▉| 990/1000 [00:22<00:00, 36.00/s] 99%|█████████▉| 994/1000 [00:22<00:00, 33.87/s]100%|█████████▉| 998/1000 [00:22<00:00, 32.63/s]100%|██████████| 1000/1000 [00:22<00:00, 43.95/s]
-Added key moranI in idata.uns
-  0%|          | 0/1000 [00:00<?, ?/s]  0%|          | 1/1000 [00:00<02:49,  5.89/s]  2%|▏         | 15/1000 [00:00<00:14, 66.43/s]  3%|▎         | 30/1000 [00:00<00:09, 97.13/s]  4%|▍         | 43/1000 [00:00<00:08, 107.25/s]  6%|▌         | 57/1000 [00:00<00:07, 117.92/s]  7%|▋         | 71/1000 [00:00<00:07, 123.56/s]  8%|▊         | 85/1000 [00:00<00:07, 127.18/s] 10%|█         | 101/1000 [00:00<00:07, 128.23/s] 12%|█▏        | 118/1000 [00:01<00:06, 138.24/s] 13%|█▎        | 132/1000 [00:01<00:06, 132.70/s] 15%|█▍        | 146/1000 [00:01<00:06, 129.04/s] 16%|█▋        | 164/1000 [00:01<00:06, 130.72/s] 18%|█▊        | 181/1000 [00:01<00:05, 140.46/s] 20%|█▉        | 196/1000 [00:01<00:05, 136.71/s] 21%|██        | 210/1000 [00:01<00:05, 136.74/s] 22%|██▏       | 224/1000 [00:01<00:05, 131.88/s] 24%|██▍       | 238/1000 [00:01<00:05, 131.70/s] 25%|██▌       | 252/1000 [00:02<00:05, 128.36/s] 27%|██▋       | 268/1000 [00:02<00:05, 131.96/s] 28%|██▊       | 283/1000 [00:02<00:05, 135.50/s] 30%|██▉       | 297/1000 [00:02<00:05, 136.65/s] 31%|███▏      | 314/1000 [00:02<00:04, 145.65/s] 33%|███▎      | 329/1000 [00:02<00:04, 141.62/s] 34%|███▍      | 344/1000 [00:02<00:04, 142.96/s] 36%|███▌      | 359/1000 [00:02<00:04, 142.58/s] 38%|███▊      | 375/1000 [00:02<00:04, 146.21/s] 39%|███▉      | 390/1000 [00:02<00:04, 145.79/s] 41%|████      | 406/1000 [00:03<00:03, 149.17/s] 42%|████▏     | 421/1000 [00:03<00:03, 147.12/s] 44%|████▎     | 437/1000 [00:03<00:03, 147.36/s] 45%|████▌     | 454/1000 [00:03<00:03, 152.23/s] 47%|████▋     | 470/1000 [00:03<00:03, 147.36/s] 49%|████▊     | 487/1000 [00:03<00:03, 148.36/s] 50%|█████     | 503/1000 [00:03<00:03, 149.62/s] 52%|█████▏    | 518/1000 [00:03<00:03, 149.00/s] 53%|█████▎    | 534/1000 [00:03<00:03, 147.60/s] 55%|█████▌    | 551/1000 [00:04<00:03, 147.35/s] 57%|█████▋    | 569/1000 [00:04<00:02, 155.83/s] 58%|█████▊    | 585/1000 [00:04<00:02, 147.84/s] 60%|██████    | 600/1000 [00:04<00:02, 142.31/s] 62%|██████▏   | 615/1000 [00:04<00:02, 139.84/s] 63%|██████▎   | 630/1000 [00:04<00:02, 138.93/s] 64%|██████▍   | 645/1000 [00:04<00:02, 139.53/s] 66%|██████▌   | 662/1000 [00:04<00:02, 144.12/s] 68%|██████▊   | 677/1000 [00:04<00:02, 144.22/s] 69%|██████▉   | 693/1000 [00:05<00:02, 146.83/s] 71%|███████   | 708/1000 [00:05<00:01, 146.94/s] 72%|███████▏  | 723/1000 [00:05<00:01, 146.80/s] 74%|███████▍  | 739/1000 [00:05<00:01, 143.62/s] 76%|███████▌  | 757/1000 [00:05<00:01, 151.23/s] 77%|███████▋  | 773/1000 [00:05<00:01, 152.13/s] 79%|███████▉  | 789/1000 [00:05<00:01, 148.55/s] 81%|████████  | 806/1000 [00:05<00:01, 145.93/s] 82%|████████▏ | 824/1000 [00:05<00:01, 152.64/s] 84%|████████▍ | 840/1000 [00:06<00:01, 152.00/s] 86%|████████▌ | 856/1000 [00:06<00:00, 147.54/s] 87%|████████▋ | 871/1000 [00:06<00:00, 146.90/s] 89%|████████▉ | 888/1000 [00:06<00:00, 151.17/s] 90%|█████████ | 904/1000 [00:06<00:00, 149.39/s] 92%|█████████▏| 921/1000 [00:06<00:00, 154.48/s] 94%|█████████▎| 937/1000 [00:06<00:00, 142.66/s] 95%|█████████▌| 952/1000 [00:06<00:00, 136.50/s] 97%|█████████▋| 966/1000 [00:06<00:00, 131.48/s] 98%|█████████▊| 980/1000 [00:07<00:00, 111.03/s] 99%|█████████▉| 992/1000 [00:07<00:00, 91.38/s] 100%|██████████| 1000/1000 [00:07<00:00, 132.40/s]
-Added key gearyC in idata.uns
-finished running all SVI tests
-Using the results from SVI identification methods: ['SOMDE' 'SpatialDE' 'SPARKX' 'nnSVG' 'scGCO' 'gearyC' 'moranI']
-273/305 SVIs identified (threshold=0.01).
-normalizing
-eventually found 11 patterns
-Added key pattern_score in idata.obsm

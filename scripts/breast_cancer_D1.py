@@ -1,5 +1,3 @@
-#!/usr/bin/env /home/lishiying/.conda/envs/spider1/bin/python
-
 import matplotlib.pyplot as plt
 import seaborn as sns
 from spider import SPIDER
@@ -10,6 +8,11 @@ import squidpy as sq
 import pandas as pd
 import numpy as np
 import umap
+
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+TF_ENABLE_ONEDNN_OPTS = 0
+from importlib import resources
 
 
 sample_name = 'D1'
@@ -34,7 +37,6 @@ idata.obs[['row', 'col']].to_csv(meta_f)
 with resources.path("spider.R_script", "run_spatialPCA.R") as pw_fn:
     os.system(str(f'/bin/bash -c "{R_path} -f /{pw_fn} {meta_f} {count_f} {k} {j} {out_f} {interface_id} {i}"'))
 
-idata = anndata.read_h5ad(f'{out_f}/idata.h5ad')
 features = pd.read_csv(f'{out_f}/interface_SpatialPCs.csv', index_col=0).T
 idata.obsm['spatialPC'] = features.loc[idata.obs_names].to_numpy()
 label_df = pd.read_csv(f'{out_f}/refined_interface_label.csv', index_col=0)

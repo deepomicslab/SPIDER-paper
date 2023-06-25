@@ -47,7 +47,7 @@ arr = [
 input1 =  int(sys.argv[1])-1
 ds = arr[input1][0]
 sample_name = arr[input1][1]
-out_f = f'/home/lishiying/data6/SPIDER-paper/SPIDER-paper/datasets/{ds}/{sample_name}/'
+out_f = f'../input_datasets/{ds}/{sample_name}/'
 print(ds, sample_name)
 adata = anndata.read_h5ad(f'{out_f}/adata.h5ad')
 print(adata)

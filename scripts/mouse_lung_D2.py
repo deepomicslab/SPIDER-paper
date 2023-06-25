@@ -1,5 +1,3 @@
-#!/usr/bin/env /home/lishiying/.conda/envs/spider1/bin/python
-
 import matplotlib.pyplot as plt
 from spider import SPIDER
 op = SPIDER()
@@ -9,6 +7,9 @@ import squidpy as sq
 import pandas as pd
 import numpy as np
 
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+TF_ENABLE_ONEDNN_OPTS = 0
 
 
 ds = 'mouse_lung'

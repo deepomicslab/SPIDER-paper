@@ -9,11 +9,13 @@ import squidpy as sq
 import pandas as pd
 import numpy as np
 
-
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+TF_ENABLE_ONEDNN_OPTS = 0
 
 sample_name = 'mousebrain'
-ds = 'slideseq'
-out_f = f'../SPIDER-paper/datasets/{ds}/{sample_name}/'
+ds = 'slide-seq-v2'
+out_f = f'../input_datasets/{ds}/{sample_name}/'
 adata = anndata.read_h5ad(f'{out_f}/adata.h5ad')
 
 R_path = 'source /etc/profile;module load GCC/11.2.0 OpenMPI/4.1.1 R/4.2.0 Anaconda3/2022.05 R-bundle-Bioconductor/3.15-R-4.2.0;R'
@@ -105,14 +107,23 @@ for cluster_i in adata.obs['cluster'].unique():
     if len(df_sub) > 0:
         useful_df.append(df_sub)
 
-patterns = [11, 7, 0, 5, 6]
-cluster = [
-    'Dentate Pyramids', 'Oligodendrocytes', 'Astrocytes', 'Ependymal', 'Endothelial Tip'
-]
-cluster_id = [
-    'DentatePyramids', 'Oligodendrocytes', 'Astrocytes', 'Ependymal', 'Endothelial_Tip'
-]
-corrs = [0.308023, 0.451584, 0.339764, 0.316733, 0.362354]
+patterns = []
+cluster = []
+cluster_id = []
+corrs = []
+cluster_id_map = {
+    'DentatePyramids': 'Dentate Pyramids',
+    'Endothelial_Tip': 'Endothelial Tip',
+    'Oligodendrocytes': 'Oligodendrocytes',
+    'Astrocytes': 'Astrocytes',
+    'Ependymal': 'Ependymal'
+}
+for x in useful_df:
+    patterns.append(int(x.idxmax()))
+    corrs.append(x.max())
+    cluster_id.append(x.name)
+    cluster.append(cluster_id_map[x.name])
+    
 
 
 useful_df = []

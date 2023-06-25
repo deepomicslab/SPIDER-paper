@@ -1,5 +1,3 @@
-#!/usr/bin/env /home/lishiying/.conda/envs/spider1/bin/python
-
 import matplotlib.pyplot as plt
 from spider import SPIDER
 op = SPIDER()
@@ -9,7 +7,9 @@ import squidpy as sq
 import pandas as pd
 import numpy as np
 
-
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+TF_ENABLE_ONEDNN_OPTS = 0
 
 import importlib
 importlib.metadata.version('spider-st')
@@ -17,7 +17,7 @@ importlib.metadata.version('spider-st')
 
 ds = 'mouse_embryo'
 sample_name = 'embryo1_2'
-out_f = f'../SPIDER-paper/input_datasets/{ds}/{sample_name}/'
+out_f = f'../input_datasets/{ds}/{sample_name}/'
 R_path = 'source /etc/profile;module load GCC/11.2.0 OpenMPI/4.1.1 R/4.2.0 Anaconda3/2022.05 R-bundle-Bioconductor/3.15-R-4.2.0;R'
 adata = anndata.read_h5ad(f'{out_f}/adata.h5ad')
 no_spatalk = False
