@@ -1,0 +1,3 @@
+"","ligand","receptor","species","celltype_sender","celltype_receiver","lr_co_exp_num","lr_co_ratio","lr_co_ratio_pvalue","score"
+"3","PLAU","MRC2","Human","TDuct_epithelium","TPancreatic_tissue",20,0.28169014084507,0,0.78846909015667
+"4","LGALS9","MRC2","Human","TDuct_epithelium","TPancreatic_tissue",20,0.28169014084507,0,0.78846909015667
