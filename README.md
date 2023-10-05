@@ -1,5 +1,8 @@
 # SPIDER-paper
 
+## Example SPIDER output for datasets used in our manuscript.
+We deposit the output in FigShare. Please download from: https://doi.org/10.6084/m9.figshare.24186900.v1.
+
 ## Test small datasets
 Run notebooks PDAD.ipynb and mouse_embryo.ipynb with adata provided in example_datasets. Or, use the python script in the scripts folder (you need to change out_f from input_datasets to example_datasets). You only need to specify the R_path param, and the ourput files will be in example_datasets.
 
