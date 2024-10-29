@@ -1,5 +1,8 @@
 datasets
 input_datasets
-example_datasets/mouse_lung
-figures
-tables
+input_datasets_small
+results/PDAC/PDAC_A/*
+results/*/*/*
+!results/*/*/SPARKX*
+!results/*/*/scGCO*
+!results/*/*/nnSVG*
