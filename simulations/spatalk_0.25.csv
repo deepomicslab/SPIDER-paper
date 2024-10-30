@@ -1,7 +1,0 @@
-"","ligand","receptor","species","celltype_sender","celltype_receiver","lr_co_exp_num","lr_co_ratio","lr_co_ratio_pvalue","score"
-"3","PLAU","MRC2","Human","TDuct_epithelium","TPancreatic_tissue",20,0.28169014084507,0,0.824901762815117
-"4","LGALS9","MRC2","Human","TDuct_epithelium","TPancreatic_tissue",14,0.197183098591549,0.012,0.819937414243271
-"31","PLAU","MRC2","Human","TStroma","TCancer_region",22,0.0652818991097923,0.838,0.317694435280766
-"41","LGALS9","MRC2","Human","TStroma","TCancer_region",47,0.13946587537092,0.019,0.78178368735688
-"32","PLAU","MRC2","Human","TStroma","TPancreatic_tissue",42,0.140939597315436,0.001,0.769894139191577
-"42","LGALS9","MRC2","Human","TStroma","TPancreatic_tissue",37,0.124161073825503,0.112,0.725863155490858
