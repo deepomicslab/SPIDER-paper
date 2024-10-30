@@ -1,6 +1,3 @@
-datasets
-input_datasets
-input_datasets_small
 results/PDAC/PDAC_A/*
 results/*/*/*
 !results/*/*/SPARKX*
