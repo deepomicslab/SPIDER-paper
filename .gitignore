@@ -3,3 +3,5 @@ results/*/*/*
 !results/*/*/SPARKX*
 !results/*/*/scGCO*
 !results/*/*/nnSVG*
+./example_datasets/saw/mouse/*
+./example_datasets/slide-seq-v2/mousebrain/*
